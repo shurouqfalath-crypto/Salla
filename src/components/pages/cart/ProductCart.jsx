@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import CartItem from "./CarItem";
-import Toastmessage from "../../../message/Toastmessage";
+import  { useState } from "react";
 
+import Toastmessage from "../../../message/Toastmessage";
+import { Link } from "react-router-dom";
+import CartItem from "./Caritem";
 export default function ProductCart({ cartItems, updateQuantity, removeFromCart }) {
   const [toast, setToast] = useState("");
 
@@ -12,17 +13,17 @@ export default function ProductCart({ cartItems, updateQuantity, removeFromCart 
 
   const handleRemove = (id) => {
     removeFromCart(id);
-    showToast("Item removed from cart");
+    showToast("Item removed from cart✖️");
   };
 
-  const handleUpdateQty = (id, amount) => {
+    const handleUpdateQty = (id, amount) => {
     const item = cartItems.find((i) => i.id === id);
     if (!item) return;
 
-    const newQty = item.quantity + amount;
+     const newQty = item.quantity + amount;
     updateQuantity(id, newQty);
 
-    showToast(amount > 0 ? "Item quantity increased" : "Item quantity decreased");
+    showToast(amount > 0 ? "Item quantity increased ✓" : "Item quantity decreased ✓");
   };
 
   const total = cartItems.reduce(
@@ -51,12 +52,13 @@ export default function ProductCart({ cartItems, updateQuantity, removeFromCart 
           <h2 className="text-lg font-semibold">Total</h2>
           <p className="text-lg font-bold">SAR {total.toFixed(2)}</p>
         </div>
-<a href="/login" >
-
+        <Link to="/login">
+        
         <button className="w-full bg-teal-900 text-white py-3 rounded-md">
           Proceed to Payment
         </button>
-        </a>
+                </Link>
+
       </div>
 
     </div>

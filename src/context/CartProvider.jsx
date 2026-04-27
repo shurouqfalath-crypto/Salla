@@ -4,22 +4,27 @@ import { CartContext } from "./CartContext";
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     const savedItems = localStorage.getItem("cartItems");
-    return savedItems ? JSON.parse(savedItems) : [];
+    try {
+      return savedItems ? JSON.parse(savedItems) : [];
+    } catch (error) {
+      console.error("Invalid cartItems in localStorage:", error);
+      return [];
+    }
   });
 
-  const addToCart = (product) => {
+  const addToCart = (product, qty = 1) => {
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item.id === product.id);
 
       if (existingItem) {
         return prev.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+            ? { ...item, quantity: item.quantity + qty }
+            : item,
         );
       }
 
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: qty }];
     });
   };
 
@@ -34,9 +39,7 @@ export const CartProvider = ({ children }) => {
     }
 
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
   };
 
@@ -44,15 +47,17 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const value = {
-    cartItems,
-    addToCart,
-    updateQuantity,
-    removeFromCart,
-  };
+  // const value = {
 
   return (
-    <CartContext.Provider value={value}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

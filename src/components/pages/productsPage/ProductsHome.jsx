@@ -1,14 +1,31 @@
-import React from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../buttons/Button";
+import { CartContext } from "../../../context/CartContext";
+import Toastmessage from "../../../message/Toastmessage";
 
 export default function ProductsHome({ product }) {
-  return (
-    <div className="h-full p-4 gap-4 flex flex-col items-center justify-between rounded-lg border-2 border-gray-50">
+  const { addToCart } = useContext(CartContext);
+  const [msg, setMsg] = useState("");
+  const [show, setShow] = useState(false);
 
+  const handleClick = () => {
+    setMsg("please wait ,Adding product to catr...");
+    setShow(true);
+
+    setTimeout(() => {
+      addToCart(product);
+      setMsg("Successfuly added to cart ");
+
+      setTimeout(() => setShow(false), 2500);
+    }, 3000);
+  };
+
+  return (
+    <div className="p-4 gap-4 flex flex-col items-center justify-between rounded-lg border-2 border-gray-50">
       <Link to={`/product/${product.id}`} className="block w-full">
         <img
-          src={product.image}
+          src={product.thumbnail}
           alt={product.title}
           className="w-full aspect-[4/3] object-cover rounded-lg"
         />
@@ -29,15 +46,20 @@ export default function ProductsHome({ product }) {
       </div>
 
       <div className="w-full flex justify-center">
-        <span className="text-gray-500 font-medium">
-          SAR {product.price}
-        </span>
+        <span className="text-gray-500 font-medium">SAR {product.price}</span>
       </div>
 
       <div className="w-full">
-        <Button product={product}>Add to Cart</Button>
-      </div>
+        <button
+          disabled={show}
+          onClick={() => handleClick(product)}
+          className={`w-full bg-teal-900 text-white py-2 rounded-md ${show ? "cursor-not-allowed bg-teal-900/40" : ""}`}
+        >
+          {show ? "loding..." : "Add to cart"}
+        </button>
 
+        {show && <Toastmessage message={msg} />}
+      </div>
     </div>
   );
 }

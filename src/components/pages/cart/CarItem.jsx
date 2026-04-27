@@ -3,14 +3,15 @@ import PlusButton from "../Details/PulsButton";
 import RemoveBtn from "./RemoveBtn";
 
 export default function CartItem({ item, onUpdateQty, onRemove }) {
+  
   return (
     <li className="flex items-center justify-between bg-gray-50 p-5 rounded-lg">
 
       <div className="flex items-center gap-6">
         <img
-          src={item.image}
+          src={item.thumbnail}
           alt={item.title}
-          className=" h-15 object-cover rounded-md"
+          className=" h-16 object-cover rounded-md"
         />
 
         <div>

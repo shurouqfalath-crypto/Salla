@@ -5,8 +5,10 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider.jsx";
 import { CartProvider } from "./context/CartProvider.jsx";
+import ReactQueryProvider from "./provider/ReactQueryProvider.jsx";
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
+<ReactQueryProvider>
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
@@ -14,5 +16,6 @@ createRoot(document.getElementById("root")).render(
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
-  </StrictMode>,
+</ReactQueryProvider>
+  // {/* </StrictMode>, */}
 );

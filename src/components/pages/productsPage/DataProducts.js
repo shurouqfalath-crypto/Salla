@@ -182,3 +182,16 @@ image: "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png",
   },
 ];
 
+// import axios from "axios";
+
+// const products = localStorage.getItem("cartItems")?.replace(/"/g, '');
+
+// export const product = axios.create({
+//   baseURL: "https://dummyjson.com/",
+//   withCredentials: true,
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${products}`
+//   }, 
+// });
+

@@ -1,16 +1,19 @@
-import React from 'react';
+import React from "react";
 
-export default function Dropdown({ onChange }) {
+export default function Dropdown({ categories, value, onChange }) {
   return (
     <select
+      value={value}
       onChange={(e) => onChange(e.target.value)}
-      className='bg-white border rounded-md text-md px-2 py-1'
+      className="p-2 border border-gray-400 rounded-md"
     >
-      <option value="all">All products</option>
-      <option value="electronics">electronics</option>
-      <option value="jewelery">jewelery</option>
-      <option value="men's clothing">men's clothing</option>
-      <option value="women's clothing">women's clothing</option>
+      <option value="all">All</option>
+
+      {categories.map((cat, index) => (
+        <option key={index} value={cat}>
+          {cat}
+        </option>
+      ))}
     </select>
-  )
+  );
 }
