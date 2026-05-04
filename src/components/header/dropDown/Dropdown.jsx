@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Dropdown({ categories, value, onChange }) {
   return (
+    
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
@@ -9,11 +10,14 @@ export default function Dropdown({ categories, value, onChange }) {
     >
       <option value="all">All</option>
 
-      {categories.map((cat, index) => (
-        <option key={index} value={cat}>
+      {categories?.map((cat, i) => (
+        <option key={i} value={cat}>
           {cat}
         </option>
       ))}
     </select>
   );
 }
+
+
+

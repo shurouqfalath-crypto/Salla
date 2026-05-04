@@ -10,15 +10,15 @@ export default function ProductsHome({ product }) {
   const [show, setShow] = useState(false);
 
   const handleClick = () => {
-    setMsg("please wait ,Adding product to catr...");
+    setMsg("please wait ,Adding product to cart...");
     setShow(true);
 
     setTimeout(() => {
       addToCart(product);
-      setMsg("Successfuly added to cart ");
+      setMsg("Successfully added to cart ");
 
-      setTimeout(() => setShow(false), 2500);
-    }, 3000);
+      setTimeout(() => setShow(false), 1500);
+    }, 1000);
   };
 
   return (

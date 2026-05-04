@@ -1,42 +1,49 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import img from "../../images/photo-home.jpg";
-import ProductsHome from "../pages/productsPage/ProductsHome";
-import { DataProducts } from "../pages/productsPage/DataProducts";
+import ProductsHome from "../pages/productsModule/ProductsHome";
 import Filterinput from "./inputFilter/Filterinput";
 import Dropdown from "../header/dropDown/Dropdown";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../../api/api";
-import { AuthContext } from "../../context/AuthContext";
 import TotalProducts from "../../total/TotalProducts";
 
 export default function Home() {
   const [filter, setFilter] = useState("");
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState("");
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["products-data"],
-    queryFn: async () => await api.get(`/products`).then((res) => res.data),
+  const {data: productData,isLoading, error,} = useQuery({
+    queryKey: ["products-data", category, filter],
+    queryFn: async () => {
+      const response = await api.get(
+        filter
+          ? `/products/search?q=${filter}`
+          : category
+            ? `/products/category/${category}`
+            : "/products", // إذا مافي  بحث ولا تحديدقسم اعرض كل المنتجات
+      );
+      return response.data;
+    },
   });
 
-  const productData = data?.products;
+  const { data: categoriesList } = useQuery({
+    queryKey: ["category-list"],
+    queryFn: async () =>
+      await api.get("/products/category-list").then((res) => res.data),
+  });
 
-  const categories = [
-    ...new Set(productData?.map((product) => product.category))
-  ];
+  const handleSearchChange = (val) => {
+    setFilter(val);
+    setCategory("");
+  };
 
-  const filteredProducts = productData
-    ?.filter((product) =>
-      product.title.toLowerCase().includes(filter.toLowerCase())
-    )
-    ?.filter((product) =>
-      category === "all" ? true : product.category === category
-    );
-
-  console.log(data);
+  const handleCategoryChange = (val) => {
+    setCategory(val);
+    setFilter("");
+  };
 
   if (isLoading) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center">
+      <div className="w-full h-125 flex items-center justify-center">
         <span>isloading....</span>
       </div>
     );
@@ -44,7 +51,7 @@ export default function Home() {
 
   if (error) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center">
+      <div className="w-full h-125 flex items-center justify-center">
         <span>{error?.message}</span>
       </div>
     );
@@ -53,23 +60,22 @@ export default function Home() {
   return (
     <div className=" sm:p-5 bg-white mt-1 rounded-lg">
       <img src={img} alt="Home" className=" rounded-lg mb-6" />
-
       <div>
-        <TotalProducts />
-
-        <div className="flex items-center justify-between gap-2 ">
+        <TotalProducts total={productData?.products?.length} />
+        <div className="flex items-center justify-between gap-2 mb-6">
           <div className="flex-1">
-            <Filterinput value={filter} onChange={setFilter} />
+            <Filterinput value={filter} onChange={handleSearchChange} />
           </div>
 
           <Dropdown
-            categories={categories }
-            onChange={setCategory}
+            categories={categoriesList}
+            value={category}
+            onChange={handleCategoryChange}
           />
         </div>
 
         <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 items-stretch">
-          {filteredProducts?.map((product) => (
+          {productData?.products?.map((product) => (
             <ProductsHome key={product.id} product={product} />
           ))}
         </div>
