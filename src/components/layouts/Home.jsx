@@ -6,12 +6,18 @@ import Dropdown from "../header/dropDown/Dropdown";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../../api/api";
 import TotalProducts from "../../total/TotalProducts";
+import Productsgrid from "../pages/productsModule/Productsgrid";
 
 export default function Home() {
   const [filter, setFilter] = useState("");
   const [category, setCategory] = useState("");
 
-  const {data: productData,isLoading, error,} = useQuery({
+  const {
+    data: productData,
+    isLoading,
+    error,
+    // isFetching,
+  } = useQuery({
     queryKey: ["products-data", category, filter],
     queryFn: async () => {
       const response = await api.get(
@@ -19,7 +25,7 @@ export default function Home() {
           ? `/products/search?q=${filter}`
           : category
             ? `/products/category/${category}`
-            : "/products", // إذا مافي  بحث ولا تحديدقسم اعرض كل المنتجات
+            : "/products",
       );
       return response.data;
     },
@@ -41,45 +47,51 @@ export default function Home() {
     setFilter("");
   };
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-125 flex items-center justify-center">
-        <span>isloading....</span>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className=" w-full h-125 flex items-center justify-center">
+  //       Loading products...
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (
       <div className="w-full h-125 flex items-center justify-center">
-        <span>{error?.message}</span>
+        Error loading products...
+        {error?.message}
       </div>
     );
   }
 
   return (
-    <div className=" sm:p-5 bg-white mt-1 rounded-lg">
-      <img src={img} alt="Home" className=" rounded-lg mb-6" />
-      <div>
-        <TotalProducts total={productData?.products?.length} />
-        <div className="flex items-center justify-between gap-2 mb-6">
-          <div className="flex-1">
-            <Filterinput value={filter} onChange={handleSearchChange} />
-          </div>
+    <div className="sm:p-5 bg-white mt-1 rounded-lg">
+      <img src={img} alt="Home" className="rounded-lg mb-6" />
 
-          <Dropdown
-            categories={categoriesList}
-            value={category}
-            onChange={handleCategoryChange}
-          />
+      <TotalProducts total={productData?.products?.length} />
+
+      <div className="flex items-center justify-between gap-2 mb-6">
+        <div className="flex-1">
+          <Filterinput value={filter} onChange={handleSearchChange} />
         </div>
 
-        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 items-stretch">
-          {productData?.products?.map((product) => (
-            <ProductsHome key={product.id} product={product} />
-          ))}
-        </div>
+        <Dropdown
+          categories={categoriesList}
+          value={category}
+          onChange={handleCategoryChange}
+        />
       </div>
+      {/* <div className="relative">
+        {isFetching && (
+          <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10">
+            <Loader text="Updating..." />
+          </div>
+        )} */}
+
+      <div>
+        <Productsgrid Products={productData?.products} isLoading={isLoading} />
+      </div>
+      {/* </div> */}
     </div>
   );
 }

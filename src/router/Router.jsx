@@ -5,11 +5,11 @@ import Home from "../components/layouts/Home";
 import ProdDetails from "../components/pages/Details/ProdDetails";
 import CartPage from "../components/pages/cart/CartPage";
 import Users from "../components/pages/users/Users";
-import Products from "../components/pages/products/Products";
-import ProductsPage from "../components/pages/products/ProductsPage";
+import Products from "../components/pages/Adminproducts/Products";
+import ProductsPage from "../components/pages/Adminproducts/ProductsPage";
 import UserPage from "../components/pages/users/UserPage";
 import DashboardLayout from "../components/layouts/DashboardLayout";
-import MainLayout from "../components/layouts/dashboard/MainLayout";
+// import MainLayout from "../components/layouts/dashboard/MainLayout";
 const routes = [
   {
     path: "/",

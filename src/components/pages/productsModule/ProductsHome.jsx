@@ -33,14 +33,14 @@ export default function ProductsHome({ product }) {
 
       <div className="w-full flex flex-col items-center text-center gap-2">
         <Link to={`/product/${product.id}`} className="block w-full">
-          <h2 className="text-base font-semibold">{product.title}</h2>
         </Link>
+          <h2 className="text-base font-semibold">{product.title}</h2>
 
         <p className="text-gray-500 text-sm">
           The latest and best version to date
         </p>
 
-        <span className="text-gray-500 text-sm underline">
+        <span className= "text-gray-500 text-sm underline">
           {product.category}
         </span>
       </div>

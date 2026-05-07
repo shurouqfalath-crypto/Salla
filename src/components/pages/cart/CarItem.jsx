@@ -22,7 +22,6 @@ export default function CartItem({ item, onUpdateQty, onRemove }) {
 
       <div className="flex items-center gap-7 ">
             <div className="flex items-center p-1 border border-gray-300 rounded-lg">
-{/* هنا  */}
         <MinusButton onClick={() => onUpdateQty(item.id, -1)} />
 
         <span className="w-[40px]  bg-gray-100 text-center rounded-md">{item.quantity}</span>
