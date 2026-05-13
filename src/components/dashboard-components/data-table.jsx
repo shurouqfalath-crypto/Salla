@@ -6,7 +6,6 @@ const Table = ({ columns = [], data = [], loading = false, error }) => {
 
       <table className="w-full text-sm text-left">
 
-        {/* Header */}
         <thead className="bg-slate-50 border-b border-slate-100 sticky top-0 z-10">
           <tr>
             {columns.map((col) => (
@@ -20,10 +19,8 @@ const Table = ({ columns = [], data = [], loading = false, error }) => {
           </tr>
         </thead>
 
-        {/* Body */}
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-slate-200">
 
-          {/* Loading */}
           {loading && (
             <tr>
               <td
@@ -38,7 +35,6 @@ const Table = ({ columns = [], data = [], loading = false, error }) => {
             </tr>
           )}
 
-          {/* Error */}
           {error && (
             <tr>
               <td colSpan={columns.length}>
@@ -49,7 +45,6 @@ const Table = ({ columns = [], data = [], loading = false, error }) => {
             </tr>
           )}
 
-          {/* Empty */}
           {!loading && data.length === 0 && (
             <tr>
               <td
@@ -64,7 +59,6 @@ const Table = ({ columns = [], data = [], loading = false, error }) => {
             </tr>
           )}
 
-          {/* Rows */}
           {data?.map((row, rowIndex) => (
             <tr
               key={rowIndex}

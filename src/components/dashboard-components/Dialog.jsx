@@ -4,6 +4,7 @@ const Dialog = ({
   open,
   onClose,
   children,
+    // optional (for default mode)
   title,
   description,
   onConfirm,
@@ -12,6 +13,7 @@ const Dialog = ({
   loading = false,
   variant = "primary",
 }) => {
+   
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose?.();
@@ -50,7 +52,7 @@ const Dialog = ({
         {/* Header */}
         <div className="relative bg-slate-900 text-white px-5 py-4">
 
-          {/* Cancel button */}
+          {/* Cancel */}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 px-3 py-1 text-xs font-medium rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 transition border border-white/10"

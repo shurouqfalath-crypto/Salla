@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
@@ -25,23 +25,17 @@ const UserForm = ({ setOpenDialog }) => {
   const validate = () => {
     const newErrors = {};
 
-    if (!form.firstName)
-      newErrors.firstName = "First name is required";
+    if (!form.firstName) newErrors.firstName = "First name is required";
 
-    if (!form.email)
-      newErrors.email = "Email is required";
+    if (!form.email) newErrors.email = "Email is required";
 
-    if (!form.age)
-      newErrors.age = "Age is required";
+    if (!form.age) newErrors.age = "Age is required";
 
-    if (!form.password)
-      newErrors.password = "Password is required";
+    if (!form.password) newErrors.password = "Password is required";
 
-    if (!form.gender)
-      newErrors.gender = "Gender is required";
+    if (!form.gender) newErrors.gender = "Gender is required";
 
-    if (!form.role)
-      newErrors.role = "Role is required";
+    if (!form.role) newErrors.role = "Role is required";
 
     setErrors(newErrors);
 
@@ -51,10 +45,10 @@ const UserForm = ({ setOpenDialog }) => {
   const queryClient = useQueryClient();
 
   const userMutation = useMutation({
-    mutationFn: (data) => api.post("users/add", data),
+    mutationFn: (data) => api.post("/users/add", data),
 
     onSuccess: async (res) => {
-      console.log("Success:", res);
+      console.log("Success: User added successfully", res);
 
       setOpenDialog(false);
 
@@ -73,11 +67,9 @@ const UserForm = ({ setOpenDialog }) => {
   const inputClass =
     "w-full mt-1 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent transition-all duration-200";
 
-  const labelClass =
-    "text-sm font-medium text-slate-600";
+  const labelClass = "text-sm font-medium text-slate-600";
 
-  const errorClass =
-    "text-xs text-red-500 mt-1";
+  const errorClass = "text-xs text-red-500 mt-1";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,15 +80,10 @@ const UserForm = ({ setOpenDialog }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4"
-    >
+    <form onSubmit={handleSubmit} className="space-y-4">
       {/* First Name */}
       <div>
-        <label className={labelClass}>
-          First Name
-        </label>
+        <label className={labelClass}>First Name</label>
 
         <input
           name="firstName"
@@ -106,18 +93,12 @@ const UserForm = ({ setOpenDialog }) => {
           placeholder="Enter first name"
         />
 
-        {errors.firstName && (
-          <p className={errorClass}>
-            {errors.firstName}
-          </p>
-        )}
+        {errors.firstName && <p className={errorClass}>{errors.firstName}</p>}
       </div>
 
       {/* Email */}
       <div>
-        <label className={labelClass}>
-          Email
-        </label>
+        <label className={labelClass}>Email</label>
 
         <input
           name="email"
@@ -128,19 +109,13 @@ const UserForm = ({ setOpenDialog }) => {
           placeholder="Enter email"
         />
 
-        {errors.email && (
-          <p className={errorClass}>
-            {errors.email}
-          </p>
-        )}
+        {errors.email && <p className={errorClass}>{errors.email}</p>}
       </div>
 
       {/* Age + Role */}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className={labelClass}>
-            Age
-          </label>
+          <label className={labelClass}>Age</label>
 
           <input
             name="age"
@@ -151,17 +126,11 @@ const UserForm = ({ setOpenDialog }) => {
             placeholder="Age"
           />
 
-          {errors.age && (
-            <p className={errorClass}>
-              {errors.age}
-            </p>
-          )}
+          {errors.age && <p className={errorClass}>{errors.age}</p>}
         </div>
 
         <div>
-          <label className={labelClass}>
-            Role
-          </label>
+          <label className={labelClass}>Role</label>
 
           <select
             name="role"
@@ -169,28 +138,18 @@ const UserForm = ({ setOpenDialog }) => {
             onChange={handleChange}
             className={inputClass}
           >
-            <option value="user">
-              User
-            </option>
+            <option value="user">User</option>
 
-            <option value="admin">
-              Admin
-            </option>
+            <option value="admin">Admin</option>
           </select>
 
-          {errors.role && (
-            <p className={errorClass}>
-              {errors.role}
-            </p>
-          )}
+          {errors.role && <p className={errorClass}>{errors.role}</p>}
         </div>
       </div>
 
       {/* Password */}
       <div>
-        <label className={labelClass}>
-          Password
-        </label>
+        <label className={labelClass}>Password</label>
 
         <input
           name="password"
@@ -201,18 +160,12 @@ const UserForm = ({ setOpenDialog }) => {
           placeholder="Enter password"
         />
 
-        {errors.password && (
-          <p className={errorClass}>
-            {errors.password}
-          </p>
-        )}
+        {errors.password && <p className={errorClass}>{errors.password}</p>}
       </div>
 
       {/* Gender */}
       <div>
-        <label className={labelClass}>
-          Gender
-        </label>
+        <label className={labelClass}>Gender</label>
 
         <div className="grid grid-cols-2 gap-3 mt-2">
           {/* Male */}
@@ -233,7 +186,6 @@ const UserForm = ({ setOpenDialog }) => {
               onChange={handleChange}
               className="hidden"
             />
-
             Male
           </label>
 
@@ -255,16 +207,11 @@ const UserForm = ({ setOpenDialog }) => {
               onChange={handleChange}
               className="hidden"
             />
-
             Female
           </label>
         </div>
 
-        {errors.gender && (
-          <p className={errorClass}>
-            {errors.gender}
-          </p>
-        )}
+        {errors.gender && <p className={errorClass}>{errors.gender}</p>}
       </div>
 
       {/* Actions */}
@@ -274,19 +221,11 @@ const UserForm = ({ setOpenDialog }) => {
           disabled={userIsSaving}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-all duration-300 shadow-sm
           
-          ${
-            userIsSaving
-              ? "bg-slate-400"
-              : "bg-slate-900 hover:bg-slate-800"
-          }`}
+          ${userIsSaving ? "bg-slate-400" : "bg-slate-900 hover:bg-slate-800"}`}
         >
-          {userIsSaving && (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          )}
+          {userIsSaving && <Loader2 className="h-4 w-4 animate-spin" />}
 
-          {userIsSaving
-            ? "Saving..."
-            : "Save User"}
+          {userIsSaving ? "Saving..." : "Save User"}
         </button>
       </div>
     </form>

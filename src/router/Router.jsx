@@ -4,10 +4,10 @@ import HomeSalla from "../components/layouts/HomeSalla";
 import Home from "../components/layouts/Home";
 import ProdDetails from "../components/pages/Details/ProdDetails";
 import CartPage from "../components/pages/cart/CartPage";
-import Users from "../components/pages/users/Users";
-import Products from "../components/pages/Adminproducts/Products";
-import ProductsPage from "../components/pages/Adminproducts/ProductsPage";
-import UserPage from "../components/pages/users/UserPage";
+// import Users from "../components/pages/users/Users";
+import Products from "../components/pages/productsAdmin/Products";
+import ProductsPage from "../components/pages/productsAdmin/ProductsPage";
+import UserPage from "../components/pages/usersAdmin/UserPage";
 import DashboardLayout from "../components/layouts/DashboardLayout";
 // import MainLayout from "../components/layouts/dashboard/MainLayout";
 const routes = [
@@ -26,16 +26,16 @@ const routes = [
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-    { path: 'userspage', exact: true, element: <UserPage /> },
-    { path: 'productspage', exact: true, element: <ProductsPage /> },
-  ]
+      { path: "userspage", exact: true, element: <UserPage /> },
+      { path: "productspage", exact: true, element: <ProductsPage /> },
+    ],
   },
 
-// {
-//   path: '/',
-//   element: <MainLayout />,
- 
-// }
+  // {
+  //   path: '/',
+  //   element: <MainLayout />,
+
+  // }
 ];
 
 export default routes;
